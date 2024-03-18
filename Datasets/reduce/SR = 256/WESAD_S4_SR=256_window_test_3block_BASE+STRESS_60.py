@@ -26,7 +26,7 @@ if (len(res3_test)==len(res4_test)):
     print('Good')
 
 lenght = len(res3_test)
-ind_minutes = lenght//36+1
+ind_minutes = 700 * 60
 
 # --- Are all emotions? ---
 # unique_emo = list(set(res4_test))
@@ -60,7 +60,7 @@ print(emotion_intervals)
 first_point = emotion_intervals[2][2][0]
 end_point = emotion_intervals[2][2][1]+1
 print("Stress time: ", (end_point-first_point)/ind_minutes)
-win = ind_minutes//2+1 # 30 sec
+win = ind_minutes # 60 sec
 center = (end_point-first_point)//2
 
 ECG_stress_1 = res3_test[first_point:first_point+win].copy()
