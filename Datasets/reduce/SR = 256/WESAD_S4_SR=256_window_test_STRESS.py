@@ -11,13 +11,11 @@ with open('S4.pkl', 'rb') as f:
 
 #  --- Get data ecg ---
 signal_ecg = (data[b'signal'][b'chest'][b'ECG'])
-res1 = []
-res1 = list((np.array(signal_ecg)).reshape(len(signal_ecg), ))
+res1 = np.array(signal_ecg).reshape(len(signal_ecg), )
 
 #  --- Get data emotions ---
 signal_emotions = (data[b'label'])
-res2 = []
-res2 = list((np.array(signal_emotions)).reshape(len(signal_emotions), ))
+res2 = np.array(signal_emotions).reshape(len(signal_emotions), )
 
 res3_test = nk.signal_resample(res1, sampling_rate=700, desired_sampling_rate=256, method='interpolation')
 res4_test = nk.signal_resample(res2, sampling_rate=700, desired_sampling_rate=256, method='interpolation')

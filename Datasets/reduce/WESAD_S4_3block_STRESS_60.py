@@ -11,13 +11,11 @@ with open('S4.pkl', 'rb') as f:
 
 #  --- Get data ecg ---
 signal_ecg = (data[b'signal'][b'chest'][b'ECG'])
-res1 = []
-res1 = list((np.array(signal_ecg)).reshape(len(signal_ecg), ))
+res1 = np.array(signal_ecg).reshape(len(signal_ecg), )
 
 #  --- Get data emotions ---
 signal_emotions = (data[b'label'])
-res2 = []
-res2 = list((np.array(signal_emotions)).reshape(len(signal_emotions), ))
+res2 = np.array(signal_emotions).reshape(len(signal_emotions), )
 
 # if (len(res1)==len(res2)):
 #     print('Good')
@@ -42,7 +40,7 @@ def get_emotion_intervals(res2):
 
 
 emotion_intervals = get_emotion_intervals(res2)
-# print(emotion_intervals)
+#print(emotion_intervals)
 
 ### --- Emo plot ---
 # y = res2
@@ -55,7 +53,7 @@ first_point = emotion_intervals[2][0][0]
 end_point = emotion_intervals[2][0][1]+1
 print("Stress time: ", (end_point-first_point)/ind_minutes)
 win = ind_minutes # 60 sec
-center = (end_point-first_point)//2 
+center = (end_point-first_point)//2
 
 ECG_stress_1 = res1[first_point:first_point+win].copy()
 ECG_stress_2 = res1[center-win//2:center+win//2+1].copy()
@@ -82,3 +80,4 @@ print('STRESS_2: \n', hrv_indices_s_2)
 hrv_indices_s_3 = nk.hrv(peaks_s_3, sampling_rate=700, show=True)
 print('STRESS_3: \n', hrv_indices_s_3)
 
+##{0: [[0, 199704], [1010306, 1041805], [1077505, 1282605], [1543006, 1713804], [1750206, 1879705], [2165306, 2529305], [2973806, 3145305], [3176106, 3973405], [4251306, 4496099]], 1: [[199705, 1010305]], 2: [[2529306, 2973805]], 3: [[1282606, 1543005]], 4: [[1879706, 2165305], [3973406, 4251305]], 5: [[1041806, 1077504]], 6: [[3145306, 3176105]], 7: [[1713805, 1750205]]}

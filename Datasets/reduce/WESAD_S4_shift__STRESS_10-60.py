@@ -11,23 +11,19 @@ with open('S4.pkl', 'rb') as f:
 
 #  --- Get data ecg ---
 signal_ecg = (data[b'signal'][b'chest'][b'ECG'])
-res1 = []
-res1 = list((np.array(signal_ecg)).reshape(len(signal_ecg), ))
+res1 = np.array(signal_ecg).reshape(len(signal_ecg), )
 
 #  --- Get data emotions ---
 signal_emotions = (data[b'label'])
-res2 = []
-res2 = list((np.array(signal_emotions)).reshape(len(signal_emotions), ))
+res2 = np.array(signal_emotions).reshape(len(signal_emotions), )
 
 # if (len(res1)==len(res2)):
 #     print('Good')
 #     lenght = len(res1)
 
-lenght = len(res2)
+lenght = len(res1)
 #ind_minutes = lenght//36+1
 ind_minutes = 700*60
-print(ind_minutes)
-
 # print(ind_minutes)
 
 def get_emotion_intervals(res2):
@@ -50,7 +46,7 @@ first_point = emotion_intervals[2][0][0]
 win = ind_minutes # 60 sec
 shift = win//6 # 10 sec
 point = first_point
-print("time: ", res2.count(2)/ind_minutes)
+print("time: ", np.sum(res2 == 2)/ind_minutes)
 
 for i in range(13):
     ECG_stress = res1[point:(point + win + 1)].copy()

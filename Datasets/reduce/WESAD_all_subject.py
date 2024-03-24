@@ -22,13 +22,11 @@ for i in arr:
 
     #  --- Get data ecg ---
     signal_ecg = (data[b'signal'][b'chest'][b'ECG'])
-    res1 = []
-    res1 = list((np.array(signal_ecg)).reshape(len(signal_ecg), ))
+    res1 = np.array(signal_ecg).reshape(len(signal_ecg), )
 
     #  --- Get data emotions ---
     signal_emotions = (data[b'label'])
-    res2 = []
-    res2 = list((np.array(signal_emotions)).reshape(len(signal_emotions), ))
+    res2 = np.array(signal_emotions).reshape(len(signal_emotions), )
 
     # if (len(res1)==len(res2)):
     #     print('Good')
