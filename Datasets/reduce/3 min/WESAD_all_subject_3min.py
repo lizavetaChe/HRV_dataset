@@ -8,11 +8,8 @@ import neurokit2 as nk
 arr = ['2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '13', '14', '15', '16', '17']
 file = open('text.txt', 'w')
 STRESS_1 = 0
-c = 1
 STRESS_2 = 0
-c2 = 1
 STRESS_3 = 0
-c3 = 1
 for i in arr:
     print(f'S{i}.pkl')
     file.write(f'S{i}.pkl'+'\n')
@@ -64,7 +61,7 @@ for i in arr:
     end_point = emotion_intervals[2][0][1]+1
     print("Stress time: ", (end_point-first_point)/ind_minutes)
     file.write(f'Stress time: {(end_point-first_point)/ind_minutes}' + '\n')
-    win = ind_minutes # 60 sec
+    win = 3*ind_minutes # 3 min
     center = (end_point-first_point)//2
 
     ECG_stress_1 = res1[first_point:first_point+win].copy()
