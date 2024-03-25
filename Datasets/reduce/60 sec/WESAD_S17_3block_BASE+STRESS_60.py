@@ -5,6 +5,8 @@ import numpy as np
 import pandas as pd
 import neurokit2 as nk
 
+file = open('S17_3block_BASE+STRESS_60.txt', 'w')
+
 with open('S17.pkl', 'rb') as f:
     data = pickle.load(f, encoding="bytes")
 # print(data)
@@ -75,10 +77,13 @@ peaks_s_3, info_s_3 = nk.ecg_peaks(signals_ECG_stress_3, sampling_rate=700)
 
 hrv_indices_s_1 = nk.hrv(peaks_s_1, sampling_rate=700, show=True)
 print('STRESS_1: \n', hrv_indices_s_1)
+file.write(f'STRESS_1: {int(hrv_indices_s_1["HRV_MeanNN"].iloc[0])}' + '\n')
 hrv_indices_s_2 = nk.hrv(peaks_s_2, sampling_rate=700, show=True)
 print('STRESS_2: \n', hrv_indices_s_2)
+file.write(f'STRESS_2: {int(hrv_indices_s_2["HRV_MeanNN"].iloc[0])}' + '\n')
 hrv_indices_s_3 = nk.hrv(peaks_s_3, sampling_rate=700, show=True)
 print('STRESS_3: \n', hrv_indices_s_3)
+file.write(f'STRESS_3: {int(hrv_indices_s_3["HRV_MeanNN"].iloc[0])}' + '\n')
 
 # --- EСG + base ---
 first_point_base = emotion_intervals[1][0][0]
@@ -106,7 +111,12 @@ peaks_b_3, info_b_3 = nk.ecg_peaks(signals_ECG_base_3, sampling_rate=700)
 
 hrv_indices_b_1 = nk.hrv(peaks_b_1, sampling_rate=700, show=True)
 print('BASE_1: \n', hrv_indices_b_1)
+file.write(f'BASE_1: {int(hrv_indices_b_1["HRV_MeanNN"].iloc[0])}' + '\n')
 hrv_indices_b_2 = nk.hrv(peaks_b_2, sampling_rate=700, show=True)
 print('BASE_2: \n', hrv_indices_b_2)
+file.write(f'BASE_2: {int(hrv_indices_b_2["HRV_MeanNN"].iloc[0])}' + '\n')
 hrv_indices_b_3 = nk.hrv(peaks_b_3, sampling_rate=700, show=True)
 print('BASE_3: \n', hrv_indices_b_3)
+file.write(f'BASE_3: {int(hrv_indices_b_3["HRV_MeanNN"].iloc[0])}' + '\n')
+
+file.close()

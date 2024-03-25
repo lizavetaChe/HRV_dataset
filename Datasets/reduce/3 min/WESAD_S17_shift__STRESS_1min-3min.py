@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import neurokit2 as nk
 
-file = open('S17_shift__STRESS_10-60.txt', 'w')
+file = open('S17_shift__STRESS_1min-3min.txt', 'w')
 
 with open('S17.pkl', 'rb') as f:
     data = pickle.load(f, encoding="bytes")
@@ -45,12 +45,12 @@ emotion_intervals = get_emotion_intervals(res2)
 
 # --- EСG + shift stress ---
 first_point = emotion_intervals[2][0][0]
-win = ind_minutes # 60 sec
-shift = win//6 # 10 sec
+win = 3*ind_minutes # 3 min
+shift = ind_minutes # 1 min
 point = first_point
 print("time: ", np.sum(res2 == 2)/ind_minutes)
 
-for i in range(15):
+for i in range(7):
     ECG_stress = res1[point:(point + win + 1)].copy()
     signals_ECG_stress, info_ECG_trans_stress = nk.ecg_process(ECG_stress, sampling_rate=700)
     peaks_t_s, info_t_s = nk.ecg_peaks(signals_ECG_stress, sampling_rate=700)
