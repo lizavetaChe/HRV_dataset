@@ -58,7 +58,9 @@ for i in range(15):
     point = point+win-shift
     print(res2[point])
     print("\nIteration: ", i, hrv_indices_t_s)
-    file.write(f'{i}: {res2[point]} - {int(hrv_indices_t_s["HRV_MeanNN"].iloc[0])}' + '\n')
+    file.write(
+        f'{i}: {res2[point]} - {float(hrv_indices_t_s["HRV_MeanNN"].iloc[0])} {float(hrv_indices_t_s["HRV_MedianNN"].iloc[0])}'
+        f' MAX: {float(hrv_indices_t_s["HRV_MaxNN"].iloc[0])} MIN:{float(hrv_indices_t_s["HRV_MinNN"].iloc[0])}' + '\n')
 
 # nk.ecg_plot(signals_ECG_stress, info_ECG_stress)
 # plt.show()

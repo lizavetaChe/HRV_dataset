@@ -27,6 +27,13 @@ lenght = len(res1)
 ind_minutes = 700*60
 # print(ind_minutes)
 
+def R(array):
+    k = 0
+    arr = []
+    for i in array:
+        arr.append(i - k)
+        k = i
+    return arr
 def get_emotion_intervals(res2):
     dict = {0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: []}
     dict[res2[0]].append([0])
@@ -75,15 +82,21 @@ peaks_s_3, info_s_3 = nk.ecg_peaks(signals_ECG_stress_3, sampling_rate=700)
 # nk.hrv(peaks_s, sampling_rate=700, show=True)
 # plt.show()
 
+arr_s = R(info_s_2["ECG_R_Peaks"])
+
 hrv_indices_s_1 = nk.hrv(peaks_s_1, sampling_rate=700, show=True)
 print('STRESS_1: \n', hrv_indices_s_1)
-file.write(f'STRESS_1: {int(hrv_indices_s_1["HRV_MeanNN"].iloc[0])}' + '\n')
+file.write(f'STRESS_1: {float(hrv_indices_s_1["HRV_MeanNN"].iloc[0])} {float(hrv_indices_s_1["HRV_MedianNN"].iloc[0])}'+
+            f' MAX: {float(hrv_indices_s_1["HRV_MaxNN"].iloc[0])} MIN:{float(hrv_indices_s_1["HRV_MinNN"].iloc[0])}' + '\n')
 hrv_indices_s_2 = nk.hrv(peaks_s_2, sampling_rate=700, show=True)
 print('STRESS_2: \n', hrv_indices_s_2)
-file.write(f'STRESS_2: {int(hrv_indices_s_2["HRV_MeanNN"].iloc[0])}' + '\n')
+file.write(f'STRESS_2: {float(hrv_indices_s_2["HRV_MeanNN"].iloc[0])}  {float(hrv_indices_s_2["HRV_MedianNN"].iloc[0])}'+
+            f' MAX: {float(hrv_indices_s_2["HRV_MaxNN"].iloc[0])} MIN:{float(hrv_indices_s_2["HRV_MinNN"].iloc[0])}' + '\n')
+file.write(f'STRESS_2_calc(!!!): max: {max(arr_s)}  mean: {sum(arr_s)/len(arr_s)}' + '\n')
 hrv_indices_s_3 = nk.hrv(peaks_s_3, sampling_rate=700, show=True)
 print('STRESS_3: \n', hrv_indices_s_3)
-file.write(f'STRESS_3: {int(hrv_indices_s_3["HRV_MeanNN"].iloc[0])}' + '\n')
+file.write(f'STRESS_3: {float(hrv_indices_s_3["HRV_MeanNN"].iloc[0])} {float(hrv_indices_s_3["HRV_MedianNN"].iloc[0])}'+
+            f' MAX: {float(hrv_indices_s_3["HRV_MaxNN"].iloc[0])} MIN:{float(hrv_indices_s_3["HRV_MinNN"].iloc[0])}' + '\n')
 
 # --- EСG + base ---
 first_point_base = emotion_intervals[1][0][0]
@@ -109,14 +122,19 @@ peaks_b_3, info_b_3 = nk.ecg_peaks(signals_ECG_base_3, sampling_rate=700)
 # # nk.hrv(peaks_s, sampling_rate=700, show=True)
 # # plt.show()
 
+arr_b = R(info_b_2["ECG_R_Peaks"])
+
 hrv_indices_b_1 = nk.hrv(peaks_b_1, sampling_rate=700, show=True)
 print('BASE_1: \n', hrv_indices_b_1)
-file.write(f'BASE_1: {int(hrv_indices_b_1["HRV_MeanNN"].iloc[0])}' + '\n')
+file.write(f'BASE_1: {float(hrv_indices_b_1["HRV_MeanNN"].iloc[0])} {float(hrv_indices_b_1["HRV_MedianNN"].iloc[0])}'+
+            f' MAX: {float(hrv_indices_b_1["HRV_MaxNN"].iloc[0])} MIN:{float(hrv_indices_b_1["HRV_MinNN"].iloc[0])}' + '\n')
 hrv_indices_b_2 = nk.hrv(peaks_b_2, sampling_rate=700, show=True)
 print('BASE_2: \n', hrv_indices_b_2)
-file.write(f'BASE_2: {int(hrv_indices_b_2["HRV_MeanNN"].iloc[0])}' + '\n')
+file.write(f'BASE_2: {float(hrv_indices_b_2["HRV_MeanNN"].iloc[0])} {float(hrv_indices_b_2["HRV_MedianNN"].iloc[0])}'+
+            f' MAX: {float(hrv_indices_b_2["HRV_MaxNN"].iloc[0])} MIN:{float(hrv_indices_b_2["HRV_MinNN"].iloc[0])}' + '\n')
+file.write(f'BASE_2_calc(!!!): max: {max(arr_b)}  mean: {sum(arr_b)/len(arr_b)}' + '\n')
 hrv_indices_b_3 = nk.hrv(peaks_b_3, sampling_rate=700, show=True)
-print('BASE_3: \n', hrv_indices_b_3)
-file.write(f'BASE_3: {int(hrv_indices_b_3["HRV_MeanNN"].iloc[0])}' + '\n')
-
+print('BASE_1: \n', hrv_indices_b_3)
+file.write(f'BASE_1: {float(hrv_indices_b_3["HRV_MeanNN"].iloc[0])} {float(hrv_indices_b_3["HRV_MedianNN"].iloc[0])}'+
+            f' MAX: {float(hrv_indices_b_3["HRV_MaxNN"].iloc[0])} MIN:{float(hrv_indices_b_3["HRV_MinNN"].iloc[0])}' + '\n')
 file.close()

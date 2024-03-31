@@ -19,6 +19,8 @@ res1 = np.array(signal_ecg).reshape(len(signal_ecg), )
 signal_emotions = (data[b'label'])
 res2 = np.array(signal_emotions).reshape(len(signal_emotions), )
 
+#ecg_cleaned = nk.ecg_clean(res2, sampling_rate=700)
+
 # if (len(res1)==len(res2)):
 #     print('Good')
 #     lenght = len(res1)
@@ -72,18 +74,33 @@ peaks_s_1, info_s_1 = nk.ecg_peaks(signals_ECG_stress_1, sampling_rate=700)
 peaks_s_2, info_s_2 = nk.ecg_peaks(signals_ECG_stress_2, sampling_rate=700)
 peaks_s_3, info_s_3 = nk.ecg_peaks(signals_ECG_stress_3, sampling_rate=700)
 
+k=0
+arr=[]
+for i in info_s_2["ECG_R_Peaks"]:
+    arr.append(i-k)
+    k=i
+
+print(max(arr))
+print(sum(arr)/len(arr))
+# plt.plot(arr)
+# plt.savefig("17_center_3min")
+
 #nk.hrv(peaks_s_1, sampling_rate=700, show=True)
 #plt.show()
 #
 hrv_indices_s_1 = nk.hrv(peaks_s_1, sampling_rate=700, show=True)
 print('STRESS_1: \n', hrv_indices_s_1)
-file.write(f'STRESS_1: {int(hrv_indices_s_1["HRV_MeanNN"].iloc[0])}' + '\n')
+file.write(f'STRESS_1: {float(hrv_indices_s_1["HRV_MeanNN"].iloc[0])} {float(hrv_indices_s_1["HRV_MedianNN"].iloc[0])}'+
+            f' MAX: {float(hrv_indices_s_1["HRV_MaxNN"].iloc[0])} MIN:{float(hrv_indices_s_1["HRV_MinNN"].iloc[0])}' + '\n')
 hrv_indices_s_2 = nk.hrv(peaks_s_2, sampling_rate=700, show=True)
 print('STRESS_2: \n', hrv_indices_s_2)
-file.write(f'STRESS_2: {int(hrv_indices_s_2["HRV_MeanNN"].iloc[0])}' + '\n')
+file.write(f'STRESS_2: {float(hrv_indices_s_2["HRV_MeanNN"].iloc[0])}  {float(hrv_indices_s_2["HRV_MedianNN"].iloc[0])}'+
+            f' MAX: {float(hrv_indices_s_2["HRV_MaxNN"].iloc[0])} MIN:{float(hrv_indices_s_2["HRV_MinNN"].iloc[0])}' + '\n')
+file.write(f'STRESS_2_calc(!!!): max: {max(arr)}  mean: {sum(arr)/len(arr)}' + '\n')
 hrv_indices_s_3 = nk.hrv(peaks_s_3, sampling_rate=700, show=True)
 print('STRESS_3: \n', hrv_indices_s_3)
-file.write(f'STRESS_3: {int(hrv_indices_s_3["HRV_MeanNN"].iloc[0])}' + '\n')
+file.write(f'STRESS_3: {float(hrv_indices_s_3["HRV_MeanNN"].iloc[0])} {float(hrv_indices_s_3["HRV_MedianNN"].iloc[0])}'+
+            f' MAX: {float(hrv_indices_s_3["HRV_MaxNN"].iloc[0])} MIN:{float(hrv_indices_s_3["HRV_MinNN"].iloc[0])}' + '\n')
 
 file.close()
 ##{0: [[0, 199704], [1010306, 1041805], [1077505, 1282605], [1543006, 1713804], [1750206, 1879705], [2165306, 2529305], [2973806, 3145305], [3176106, 3973405], [4251306, 4496099]], 1: [[199705, 1010305]], 2: [[2529306, 2973805]], 3: [[1282606, 1543005]], 4: [[1879706, 2165305], [3973406, 4251305]], 5: [[1041806, 1077504]], 6: [[3145306, 3176105]], 7: [[1713805, 1750205]]}
