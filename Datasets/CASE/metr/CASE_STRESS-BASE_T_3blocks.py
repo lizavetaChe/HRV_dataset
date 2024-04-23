@@ -63,19 +63,16 @@ for i in arr_subject:
             start = dict_intervals[f'{k}'][0][0]
             end = dict_intervals[f'{k}'][0][1]
 
-            center = end - start
+            center = (end - start)/2
 
             start1 = start
             end1 = start+(1000*60)
-
-            start2 = center - (1000*30)
-            end2 = center + (1000*30)
 
             start3 = end - (1000*60)
             end3 = end
 
             ecg1 = data_sign.query(f'daqtime >= {start1} & daqtime <= {end1}')['ecg'].tolist()
-            ecg2 = data_sign.query(f'daqtime >= {start2} & daqtime <= {end2}')['ecg'].tolist()
+            ecg2 = data_sign.query(f'daqtime >= {start+center-(1000*30)} & daqtime <= {end2-center + (1000*30)}')['ecg'].tolist()
             ecg3 = data_sign.query(f'daqtime >= {start3} & daqtime <= {end3}')['ecg'].tolist()
 
 
