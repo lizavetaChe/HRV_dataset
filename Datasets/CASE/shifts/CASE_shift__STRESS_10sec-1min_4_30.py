@@ -73,9 +73,9 @@ for i in arr_subject:
 
     while(point+win<=len(ecg)):
         signal = ecg[point:point+win]
-        signals_ECG_stress, info_ECG_stress = nk.ecg_process(signal, sampling_rate=700)
-        peaks_s, info_s = nk.ecg_peaks(signals_ECG_stress.ECG_Clean, sampling_rate=700)
-        hrv_indices_s = nk.hrv(peaks_s, sampling_rate=700)
+        signals_ECG_stress, info_ECG_stress = nk.ecg_process(signal, sampling_rate=1000)
+        peaks_s, info_s = nk.ecg_peaks(signals_ECG_stress.ECG_Clean, sampling_rate=1000)
+        hrv_indices_s = nk.hrv(peaks_s, sampling_rate=1000)
         file.write(f'{round(float(hrv_indices_s["HRV_MeanNN"].iloc[0]), 3)},')
         point = point+win-shift
 
